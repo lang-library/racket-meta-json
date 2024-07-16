@@ -1,6 +1,4 @@
 #lang racket
-#;(require compatibility/defmacro) ;; compatibility-lib
-#;(require while-until) ;; while-until
 (require json)
 (require base64)
 (require pprint-all)
@@ -42,8 +40,8 @@
       )
     )
   (cond
-    ((void? mo) mo)
-    ((jsexpr? mo) mo)
+    #;((void? mo) mo)
+    ((jsexpr? mo #:null (void)) mo)
     (#t (to-meta-pair "racket" (print->string mo)))
     )
   )
