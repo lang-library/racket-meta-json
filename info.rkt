@@ -10,7 +10,7 @@
 (define repositories '("4.x"))
 (define primary-file "main.rkt")
 (define release-notes '((p "First release")))
-(define deps '(
+(define deps '("base64-lib"
                "reprovide-lang-lib"
                "access"
                "base"
