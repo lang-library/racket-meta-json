@@ -9,8 +9,7 @@
   )
 
 (define (from-meta-pair ht)
-  (with-handlers ([exn:fail?
-                   ht])
+  (with-handlers ([exn:fail? (lambda (_) ht)])
     (let ([key (hash-ref ht '!)])
       (cond
         ((equal? key "bytes") (from-base64 (hash-ref ht '?)))
