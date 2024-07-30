@@ -12,7 +12,6 @@
   (with-handlers ([exn:fail? (lambda (_) ht)])
     (let ([key (hash-ref ht '!)])
       (cond
-        #;((equal? key "bytes") (from-base64 (hash-ref ht '?)))
         ((equal? key "racket")
          (define sp (open-input-string (hash-ref ht '?)))
          (read sp))
@@ -25,8 +24,8 @@
 (define (to-meta-object x)
   (define mo
     (cond
-      ((void? x) x)
-      #;((bytes? x) (to-meta-pair "bytes" (to-base64 x)))
+      #;((void? x) x)
+      ((void? x) #f)
       ((bytes? x) (to-base64 x))
       ((cons? x) (cons (to-meta-object (car x)) (to-meta-object (cdr x))))
       ((hash? x)
@@ -77,13 +76,15 @@
 (define (to-json x #:indent? [indent? #f])
   (! x
      (to-meta-object !)
-     (jsexpr->string ! #:null (void) #:indent (if indent? 2 #f))
+     #;(jsexpr->string ! #:null (void) #:indent (if indent? 2 #f))
+     (jsexpr->string ! #:null #f #:indent (if indent? 2 #f))
      )
   )
 
 (define (from-json json)
   (! json
-     (string->jsexpr ! #:null (void))
+     #;(string->jsexpr ! #:null (void))
+     (string->jsexpr ! #:null #f)
      (from-meta-object !)
      )
   )
