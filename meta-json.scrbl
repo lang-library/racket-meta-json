@@ -30,6 +30,18 @@ This basically provides @racket[to-json], and @racket[from-json].
 Generates a JSON source string for x.
 }
 
-@defform[(from-json json)]{
+@defform[(from-json json #:string-key? [string-key? #f])]{
 Parses a recognizable prefix of the string str as an object. Raises exn:fail:read if the string is malformed JSON.
 }
+
+@codeblock|{
+#lang racket/base
+(require meta-json)
+(require output)
+
+(dump (from-json (to-json '#hash((abc . 777)))))
+(dump (from-json (to-json '#hash((abc . 777))) #:string-key? #t))
+
+;;(from-json (to-json (quote #hash((abc . 777))))) ==> #hasheq((abc . 777))
+;;(from-json (to-json (quote #hash((abc . 777)))) #:string-key? #t) ==> #hash(("abc" . 777))
+}|
