@@ -12,7 +12,7 @@
   (with-handlers ([exn:fail? (lambda (_) ht)])
     (let ([key (hash-ref ht '!)])
       (cond
-        ((equal? key "bytes") (from-base64 (hash-ref ht '?)))
+        #;((equal? key "bytes") (from-base64 (hash-ref ht '?)))
         ((equal? key "racket")
          (define sp (open-input-string (hash-ref ht '?)))
          (read sp))
@@ -26,12 +26,14 @@
   (define mo
     (cond
       ((void? x) x)
-      ((bytes? x) (to-meta-pair "bytes" (to-base64 x)))
+      #;((bytes? x) (to-meta-pair "bytes" (to-base64 x)))
+      ((bytes? x) (to-base64 x))
       ((cons? x) (cons (to-meta-object (car x)) (to-meta-object (cdr x))))
       ((hash? x)
        (hash-map/copy
         x
         (lambda (k v)
+          (values k (to-meta-object k))
           (values k (to-meta-object v))
           )))
       ((vector? x) (vector->list (vector-map to-meta-object x)))
