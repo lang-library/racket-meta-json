@@ -41,7 +41,7 @@
   (cond
     #;((void? mo) mo)
     ((jsexpr? mo #:null (void)) mo)
-    (#t (to-meta-pair "racket" (print->string mo)))
+    (#t (to-meta-pair "racket" (output->string mo)))
     )
   )
 
