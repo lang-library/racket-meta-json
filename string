@@ -1,4 +1,0 @@
-info.rkt:               "pprint-all"
-lib.rkt:(require pprint-all)
-lib.rkt:    (#t (to-meta-pair "racket" (print->string mo)))
-test.rkt:(require pprint-all)

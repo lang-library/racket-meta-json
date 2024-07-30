@@ -45,36 +45,38 @@
     )
   )
 
-(define (from-meta-object mo)
+(define (from-meta-object mo #:string-key? [string-key? #f])
   (define x
     (cond
-      ((cons? mo) (cons (from-meta-object (car mo)) (from-meta-object (cdr mo))))
+      ((cons? mo)
+       (cons (from-meta-object (car mo) #:string-key? string-key?)
+             (from-meta-object (cdr mo) #:string-key? string-key?)))
       ((hash? mo)
        (if (hash-has-key? mo '!)
            (from-meta-pair mo)
-
-           #;(hash-map/copy
-              mo
-              (lambda (k v)
-                (values k (from-meta-object v))
+           (if (not string-key?)
+               (hash-map/copy
+                mo
+                (lambda (k v)
+                  (values k (from-meta-object v #:string-key? string-key?))
+                  )
                 )
-              )
-
-           (let ([result (make-hash)])
-             (hash-map
-              mo
-              (lambda (k v)
-                (hash-set!
+               (let ([result (make-hash)])
+                 (hash-map
+                  mo
+                  (lambda (k v)
+                    (hash-set!
+                     result
+                     (symbol->string k)
+                     (from-meta-object v #:string-key? string-key?)
+                     )
+                    )
+                  )
                  result
-                 (symbol->string k)
-                 (from-meta-object v)
                  )
-                )
-              )
-             result
-             )
+               )
            ))
-      ((vector? mo) (vector-map from-meta-object mo))
+      ((vector? mo) (vector-map from-meta-object mo #:string-key? string-key?))
       (#t mo)
       )
     )
@@ -96,10 +98,10 @@
      )
   )
 
-(define (from-json json)
+(define (from-json json #:string-key? [string-key? #f])
   (! json
      (string->jsexpr ! #:null (void))
-     (from-meta-object !)
+     (from-meta-object ! #:string-key? string-key?)
      )
   )
 
