@@ -1,6 +1,6 @@
 #lang racket
 (require "./main.rkt")
-(require pprint-all)
+(require output)
 
 (dump (to-json (void)))
 (dump (to-json #"apple"))

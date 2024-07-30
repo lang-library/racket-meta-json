@@ -14,7 +14,7 @@
                "reprovide-lang-lib"
                "access"
                "base"
-               "pprint-all"
+               "output"
                "while-until"
                ))
 (define build-deps '("racket-doc"

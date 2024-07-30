@@ -15,7 +15,7 @@ This basically provides @racket[to-json], and @racket[from-json].
 @codeblock|{
 #lang racket/base
 (require meta-json)
-(require pprint-all)
+(require output)
 
 (dump (from-json (to-json (void))))
 (dump (from-json (to-json null)))
