@@ -14,3 +14,4 @@
 (dump (from-json (to-json '(11 22 #"apple"))))
 (dump (from-json (to-json '#(11 22 #"apple"))))
 (dump (from-json (to-json '#hash(((a b c) . "bytes") (? . "YXBwbGU")))))
+(dump (from-json (to-json '#hash((abc . 777)))))
